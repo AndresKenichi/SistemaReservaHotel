@@ -11,4 +11,16 @@ package Logica;
  */
 public class conexion {
     
+    public String db="basereserva";
+    public String url="jdbc:mysql://127.0.0.1"+db;
+    public String user="root";
+    public String pass="";
+    
+    public conexion(){
+        
+    }
+    
+    //Creamos una funcion para conectarnos a la base de datos.
+    
+    
 }
