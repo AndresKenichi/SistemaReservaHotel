@@ -26,7 +26,7 @@ public class fhabitacion {
     private Connection cn = mysql.conectar();
 
     private String sSQL = "";
-    private Integer totalregistros;
+    public Integer totalregistros;
 
     //Creamos una funcion para mostrar los registros de la base de datos
     public DefaultTableModel mostrar(String buscar) {
@@ -109,23 +109,58 @@ public class fhabitacion {
 
     }
 
-    //Creamos una funcion para insertar datos en la bd
+    //Creamos una funcion para Editar los datos en la bd
     public boolean editar(vhabitacion dts) {
-        
+        sSQL="update habitacion set numero=?, piso=?, descripcion=?, caracteristicas=?, precio_diario=?, estado=?, tipo_habitacion=?"+
+                " where idhabitacion=?";
         try {
+            
+            PreparedStatement pst = cn.prepareStatement(sSQL);
+            pst.setString(1, dts.getNumero());
+            pst.setString(2, dts.getPiso());
+            pst.setString(3, dts.getDescripcion());
+            pst.setString(4, dts.getCaracteristicas());
+            pst.setDouble(5, dts.getPrecio_diario());
+            pst.setString(6, dts.getEstado());
+            pst.setString(7, dts.getTipo_habitacion());
+            pst.setInt(8, dts.getIdhabitacion()); 
+            //variable para almacenar el resultado de la ejecucion del statement
+            int n=pst.executeUpdate();
+            
+            if(n!=0){
+                return true;
+            }else{
+                return false;
+            }
+            
 
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e);
+            return false;
         }
 
     }
 
-    //Creamos una funcion para insertar datos en la bd
+    //Creamos una funcion para eliminar los datos en la bd
     public boolean eliminar(vhabitacion dts) {
+        sSQL="delete from habitacion where idhabitacion=?";
+        
         try {
+            PreparedStatement pst = cn.prepareStatement(sSQL);
+            pst.setInt(1, dts.getIdhabitacion());
+            
+            //variable para almacenar el resultado de la ejecucion del statement
+            int n=pst.executeUpdate();
+            
+            if(n!=0){
+                return true;
+            }else{
+                return false;
+            }
 
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e);
+            return false;
         }
 
     }
